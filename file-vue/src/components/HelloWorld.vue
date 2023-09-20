@@ -2,7 +2,7 @@
   <div class="hello" style="padding-top: 10px">
     <a-row type="flex" justify="center" >
       <a-col :span="2" style="line-height: 32px;">总控制</a-col>
-      <a-col :span="12"><a-input v-model="totalValue" @change="totalControl"></a-input></a-col>
+      <a-col :span="12"><a-input v-model="totalValue"  type="password" @change="totalControl"></a-input></a-col>
       <a-col :span="6" :push="1">
         <div style="display: flex;justify-content: center;">
           <a-button :loading="loading" @click="start">开始</a-button>
@@ -20,7 +20,7 @@
     <div style="max-height: 80vh; overflow-y: auto">
       <a-table :columns="columns" :dataSource="files" :pagination="false">
       <span slot="code" slot-scope="_, record">
-        <a-input v-model="record.code"></a-input>
+        <a-input v-model="record.code" type="password"></a-input>
       </span>
         <span slot="mode" slot-scope="text,record">
 <!--          <a-radio-group name="radioGroup" :defaultValue="text" v-model="record.mode">
