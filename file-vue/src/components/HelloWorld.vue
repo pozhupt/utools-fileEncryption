@@ -23,10 +23,11 @@
         <a-input v-model="record.code"></a-input>
       </span>
         <span slot="mode" slot-scope="text,record">
-         <a-radio-group name="radioGroup" :defaultValue="text" v-model="record.mode">
+<!--          <a-radio-group name="radioGroup" :defaultValue="text" v-model="record.mode">
             <a-radio value="encode">加密</a-radio>
             <a-radio value="decode">解密</a-radio>
-          </a-radio-group>
+          </a-radio-group> -->
+          {{ (record.mode=='decode')?"解密":"加密" }}
       </span>
         <span slot="action" slot-scope="_, record">
           <div style="display: flex">

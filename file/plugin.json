@@ -1,21 +1,28 @@
 {
-  "pluginName": "文件加密",
-  "description": "文件加密",
-  "version": "1.0.3",
-  "author": "xiaou",
+  "pluginName": "文件加解密",
+  "description": "文件加解密",
+  "version": "1.0.4",
+  "author": "pozhupt",
   "main": "vue/index.html",
   "preload": "preload.js",
   "logo": "logo.png",
   "features": [
     {
       "code": "file",
-      "explain": "文件加密",
+      "explain": "文件加解密",
       "cmds": [
-        "文件加密",
         {
           "type": "files",
           "label": "文件加密",
           "fileType": "file",
+          "match": "/.+(?<!xu)$/",
+          "minNum": 1
+        },
+        {
+          "type": "files",
+          "label": "文件解密",
+          "fileType": "file",
+          "match": "/.+(?<=xu)$/",
           "minNum": 1
         }
       ]
