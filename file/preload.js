@@ -1,7 +1,6 @@
 const fs = require("fs");
 const crypto = require("crypto");
 const path = require('path')
-var progressStream = require('progress-stream');
 window.pluginInfo = JSON.parse(fs.readFileSync(path.join(__dirname, 'plugin.json')));
 window.isFile = (filePath) => {
   const stat = fs.statSync(filePath);
