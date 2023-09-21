@@ -1,13 +1,13 @@
 <template>
   <div class="hello" style="padding-top: 10px">
-    <a-row type="flex" justify="center" >
+    <a-row type="flex" justify="center">
       <a-col :span="2" style="line-height: 32px;">总控制</a-col>
-      <a-col :span="12"><a-input v-model="totalValue"  type="password" @change="totalControl"></a-input></a-col>
+      <a-col :span="12"><a-input v-model="totalValue" type="password" @change="totalControl"></a-input></a-col>
       <a-col :span="6" :push="1">
         <div style="display: flex;justify-content: center;">
           <a-button :loading="loading" @click="start">开始</a-button>
-          <a-button  @click="openFile" style="margin: 0 10px">增加文件</a-button>
-          <a-button  @click="clearFiles">清理</a-button>
+          <a-button @click="openFile" style="margin: 0 10px">增加文件</a-button>
+          <a-button @click="clearFiles">清理</a-button>
         </div>
       </a-col>
     </a-row>
@@ -15,20 +15,16 @@
       <a-progress :percent="totalProgress" :show-info="false" :stroke-color="{
         '0%': '#108ee9',
         '100%': '#87d068',
-      }"/>
+      }" />
     </div>
     <div style="max-height: 80vh; overflow-y: auto">
       <a-table :columns="columns" :dataSource="files" :pagination="false">
-      <span slot="code" slot-scope="_, record">
-        <a-input v-model="record.code" type="password"></a-input>
-      </span>
+        <span slot="code" slot-scope="_, record">
+          <a-input v-model="record.code" type="password"></a-input>
+        </span>
         <span slot="mode" slot-scope="text,record">
-<!--          <a-radio-group name="radioGroup" :defaultValue="text" v-model="record.mode">
-            <a-radio value="encode">加密</a-radio>
-            <a-radio value="decode">解密</a-radio>
-          </a-radio-group> -->
-          {{ (record.mode=='decode')?"解密":"加密" }}
-      </span>
+          {{ (record.mode == 'decode') ? "解密" : "加密" }}
+        </span>
         <span slot="action" slot-scope="_, record">
           <div style="display: flex">
             <a-button @click="removeItem(record)" type="link">移除</a-button>
@@ -81,7 +77,7 @@ const columns = [
 
 export default {
   name: 'HelloWorld',
-  data () {
+  data() {
     return {
       columns,
       files: [],
@@ -91,7 +87,7 @@ export default {
     }
   },
   computed: {
-    totalProgress () {
+    totalProgress() {
       const rw = this.files.filter(file => file.status !== '未完成')
       if (rw.length === 0) {
         return 0
@@ -110,7 +106,7 @@ export default {
       return value
     }
   },
-  created () {
+  created() {
     // eslint-disable-next-line no-undef
     utools.onPluginReady(() => {
       this.files = []
@@ -136,7 +132,7 @@ export default {
       }
     })
   },
-  mounted () {
+  mounted() {
     document.addEventListener('dragstart', (e) => {
       e.preventDefault()
       e.stopPropagation()
@@ -157,28 +153,28 @@ export default {
     })
   },
   methods: {
-    openFilePosition ({ path }) {
+    openFilePosition({ path }) {
       // eslint-disable-next-line no-undef
       utools.shellShowItemInFolder(path)
     },
-    sendNotification () {
+    sendNotification() {
       // eslint-disable-next-line no-undef
       utools.showNotification('文件加密任务已经完成')
       this.notification = false
     },
-    clearFiles () {
+    clearFiles() {
       const runFiles = this.files.filter(item => item.status !== '未完成' && item.status !== '完成')
       this.files.length = 0
       this.files.push(...runFiles)
       this.$message.success('清空了完成和未完成的加密任务')
     },
-    removeItem ({ key }) {
+    removeItem({ key }) {
       const index = this.files.findIndex(item => item.key === key)
       if (index !== -1) {
         this.files.splice(index, 1)
       }
     },
-    filePathHandler (files) {
+    filePathHandler(files) {
       let tips = false
       this.files.push(...files.map((item) => {
         const index = this.files.findIndex(i => i.path === item.path)
@@ -194,7 +190,7 @@ export default {
         this.$message.warning('存在相同任务已经过滤')
       }
     },
-    openFile () {
+    openFile() {
       const files = window.openFile()
       if (!files) {
         this.$message.warning('未选择文件')
@@ -202,7 +198,7 @@ export default {
       }
       this.filePathHandler(files)
     },
-    start () {
+    start() {
       if (!this.files.length) {
         this.$message.warning('文件列表为空')
       }
@@ -229,10 +225,10 @@ export default {
         }
       })
     },
-    help () {
+    help() {
       window.openUrl('https://yuanliao.info/d/1364/21')
     },
-    totalControl () {
+    totalControl() {
       this.files.map(item => {
         item.code = this.totalValue
       })
@@ -240,8 +236,3 @@ export default {
   }
 }
 </script>
-
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-
-</style>

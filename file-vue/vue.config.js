@@ -5,6 +5,7 @@ module.exports = {
   publicPath: './',
   outputDir: '../file/vue',
   productionSourceMap: false,
+  lintOnSave:false,//这里禁止使用eslint-loader
   devServer: {
     proxy: {
       '/itooi': {
