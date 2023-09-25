@@ -24,9 +24,16 @@ window.openFile = () => {
 // 加密
 window.xencode = (by, filePath, key, iv, callback) => {
   return new Promise((resolve) => {
-    const encryptStream = crypto.createCipheriv(by, key, iv);
-    const readStream = fs.createReadStream(filePath);
-    const writeStream = fs.createWriteStream(filePath + ".xu");
+    let encryptStream, readStream, writeStream
+    try {
+      encryptStream = crypto.createCipheriv(by, key, iv);
+      readStream = fs.createReadStream(filePath);
+      writeStream = fs.createWriteStream(filePath + ".xu")
+    } catch (e) {
+      console.log(e)
+      callback("失败");
+      return
+    }
     if (callback) {
       let totalSize = fs.statSync(filePath).size;
       let curSize = 0;
@@ -40,6 +47,11 @@ window.xencode = (by, filePath, key, iv, callback) => {
         })
         .pipe(encryptStream) // 加密
         .pipe(writeStream)
+        .on('error', (error) => {
+          console.log('1 xencode error', error.message);
+          readStream.close()
+          callback("失败");
+        })
         .on("finish", function () {
           resolve("完成");
         });
@@ -47,6 +59,10 @@ window.xencode = (by, filePath, key, iv, callback) => {
       readStream
         .pipe(encryptStream) // 加密
         .pipe(writeStream)
+        .on('error', (error) => {
+          console.log('2 xencode error', error.message);
+          resolve("完成");
+        })
         .on("finish", function () {
           resolve("完成");
         });

@@ -37,13 +37,10 @@
 </template>
 
 <script>
-import { v4 as uuidV4 } from 'uuid'
 import {
   enable as enableDarkMode,
   disable as disableDarkMode
 } from 'darkreader'
-
-const uuid = uuidV4()
 
 const columns = [
   {
@@ -185,7 +182,8 @@ export default {
           tips = true
           return {}
         }
-        const file = { key: `t${uuid.v1}`, name: item.name, path: item.path, code: '', status: '未完成' }
+        const file = { key:item.path.MD5(16), name: item.name, path: item.path, code: '', status: '未完成' }
+        console.log("file.key == "+file.key)
         file.mode = item.name.includes('.xu') ? 'decode' : 'encode'
         return file
       }).filter(item => item.key))
@@ -211,6 +209,7 @@ export default {
       }
       this.files.filter(item => item.status === '未完成').map((item) => {
         const index = this.files.findIndex(i => i.key === item.key)
+        console.log("index: " + index+" file.size: " + this.files.length)
         if (item.mode === 'encode') {
           const key = item.code.MD5(16)
           window.xencode('aes-128-cbc', item.path, key, item.code.MD5(), (progress) => {

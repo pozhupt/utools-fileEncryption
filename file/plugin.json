@@ -8,6 +8,13 @@
   "logo": "logo.png",
   "features": [
     {
+      "code": "show",
+      "explain": "文件加解密",
+      "cmds": [
+        "文件加解密"
+      ]
+    },
+    {
       "code": "file",
       "explain": "文件加解密",
       "cmds": [
