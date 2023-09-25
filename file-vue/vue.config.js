@@ -5,7 +5,7 @@ module.exports = {
   publicPath: './',
   outputDir: '../file/vue',
   productionSourceMap: false,
-  lintOnSave:false,//这里禁止使用eslint-loader
+  lintOnSave: false,//这里禁止使用eslint-loader
   devServer: {
     proxy: {
       '/itooi': {
@@ -18,23 +18,30 @@ module.exports = {
       }
     }
   },
-  configureWebpack: {
-    // optimization: {
-    //   minimizer: [
-    //     new TerserPlugin({
-    //       terserOptions: {
-    //         ecma: undefined,
-    //         warnings: false,
-    //         parse: {},
-    //         compress: {
-    //           drop_console: true,
-    //           drop_debugger: false,
-    //           pure_funcs: ['console.log'] // 移除console
-    //         }
-    //       }
-    //     })
-    //   ]
-    // }
-  }
+  css: {
+    extract: false,
+    sourceMap: true, // 开启 CSS source maps?
+    loaderOptions: {
+      less: {
+        javascriptEnabled: true
+      }
+    }
+  },
+  // optimization: {
+  //   minimizer: [
+  //     new TerserPlugin({
+  //       terserOptions: {
+  //         ecma: undefined,
+  //         warnings: false,
+  //         parse: {},
+  //         compress: {
+  //           drop_console: true,
+  //           drop_debugger: false,
+  //           pure_funcs: ['console.log'] // 移除console
+  //         }
+  //       }
+  //     })
+  //   ]
+  // }
 
 }

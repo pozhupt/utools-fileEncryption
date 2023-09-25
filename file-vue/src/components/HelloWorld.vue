@@ -2,7 +2,7 @@
   <div class="hello" style="padding-top: 10px">
     <a-row type="flex" justify="center">
       <a-col :span="2" style="line-height: 32px;">总控制</a-col>
-      <a-col :span="12"><a-input v-model="totalValue" type="password" @change="totalControl"></a-input></a-col>
+      <a-col :span="12"><a-input v-model="totalValue" placeholder="请输入密码，此密码将应用到所有任务" type="password" @change="totalControl"></a-input></a-col>
       <a-col :span="6" :push="1">
         <div style="display: flex;justify-content: center;">
           <a-button :loading="loading" @click="start">开始</a-button>
@@ -20,7 +20,7 @@
     <div style="max-height: 80vh; overflow-y: auto">
       <a-table :columns="columns" :dataSource="files" :pagination="false">
         <span slot="code" slot-scope="_, record">
-          <a-input v-model="record.code" type="password"></a-input>
+          <a-input v-model="record.code" placeholder="请输入密码" type="password"></a-input>
         </span>
         <span slot="mode" slot-scope="text,record">
           {{ (record.mode == 'decode') ? "解密" : "加密" }}
@@ -37,11 +37,14 @@
 </template>
 
 <script>
-import uuidv1 from 'uuid/v1'
+import { v4 as uuidV4 } from 'uuid'
 import {
   enable as enableDarkMode,
   disable as disableDarkMode
 } from 'darkreader'
+
+const uuid = uuidV4()
+
 const columns = [
   {
     title: '文件名',
@@ -182,7 +185,7 @@ export default {
           tips = true
           return {}
         }
-        const file = { key: `t${uuidv1()}`, name: item.name, path: item.path, code: '', status: '未完成' }
+        const file = { key: `t${uuid.v1}`, name: item.name, path: item.path, code: '', status: '未完成' }
         file.mode = item.name.includes('.xu') ? 'decode' : 'encode'
         return file
       }).filter(item => item.key))
